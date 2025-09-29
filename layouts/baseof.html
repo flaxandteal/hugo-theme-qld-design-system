@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {{ $styles := resources.Get "scss/main.scss" | resources.ToCSS | resources.Minify }}
+  {{ $styles := resources.Get "scss/main.scss" | css.Sass | resources.Minify }}
   <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
 </head>
 <body class="qld__grid inside vertical-nav qld__form-style–outlined No">
