@@ -1,0 +1,11 @@
+name = "qld-desgin-system"
+license = "MIT"
+licenseFile = ""
+min_version = "0.1.0"
+author = "Stuart Marshall"
+homepage = "https://github.com/flaxandteal/qld-design-system"
+description = "A Hugo theme using the QLD design system module"
+
+[module]
+  [[module.imports]]
+    path = "github.com/flaxandteal/hugo-mod-qld-design-system"
