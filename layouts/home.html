@@ -1,7 +1,14 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+  <section class="qld__body
+  ">
+    <div class="container-fluid">
+      <h1>{{ .LinkTitle }}</h1>
+      {{ .Content }}
+    </div>
+    
+    {{ range site.RegularPages }}
+      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+      {{ .Summary }}
+    {{ end }}
+  </section>
 {{ end }}
