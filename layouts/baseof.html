@@ -1,24 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  {{ $styles := resources.Get "scss/main.scss" | css.Sass | resources.Minify }}
-  <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
-</head>
-<body class="qld__grid inside vertical-nav qld__form-style–outlined No">
+  {{ partial "head.html" . }}
+<body class="qld__grid inside vertical-nav qld__form-style–outlined No qld__main-nav__scroll--unlocked">
 
-  {{ partial "header.html" . }}
+  {{ partial "header.html" .}}
 
-  <main>
+  <main class="main landing" role="main">
     {{ block "main" . }}{{ end }}
   </main>
 
   {{ partial "footer.html" . }}
-
-  <!-- QGDS Vanilla JS CDN - Fixed to use compiled JS instead of source -->
-  <script src="{{ "js/main.js" | relURL }}"></script>
-
-  <!-- Optional: Custom JS - Added type="module" to support ES6 imports -->
-  <script type="module" src="{{ "js/main.js" | relURL }}"></script>
 
 </body>
 </html>

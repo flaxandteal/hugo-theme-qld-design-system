@@ -15,14 +15,17 @@
             <a href="https://www.qld.gov.au">
                 <span class="qld__header__pre-header-url">qld.gov.au</span>
                 <!-- Local pre-header brand image (copy upstream image to static/img/qld-gov-logo.svg) -->
-                <img class="qld__header__pre-header-brand-image" alt="Queensland Government" src="{{ "img/qld-gov-logo.svg" | relURL }}">
+                <img class="qld__header__pre-header-brand-image" alt="Queensland Government" src="{{ "img/header-logo-qgov--light.svg" | relURL }}">
+                
             </a>
 
             <!-- CTA wrapper for right aligned links in the preheader -->
             <div class="qld__header__cta-wrapper">
                 <a class="qld__header__cta-link" href="javascript:void(0)">
                     <span class="qld__header__cta-link-icon">
-                        <i class="fa-light fa-phone"></i>
+                        <svg class="qld__icon qld__icon--lead qld__icon--xs" aria-hidden="true">
+                            <use href="img/QLD-icons.svg#phone"></use>
+                        </svg>
                     </span>
                     <span class="qld__header__cta-link-text">Contact us</span>
                 </a>
@@ -73,13 +76,12 @@
                 <a href="https://www.choreport.health.qld.gov.au">
                     <!-- QLD Government logo -->
                     <div class="qld__header__brand-image">
-                    <!-- Local brand logo: copy upstream image to static/img/qld-gov-wordmark.svg -->
-                    <img src="{{ "img/qld-gov-wordmark.svg" | relURL }}" alt="A logo representing the Queensland Government">
+                    <img src="{{ "img/header-logo-qgov--dark.svg" | relURL }}" alt="Queensland Goverment">
                     </div>
                     <!-- Site name and description -->
                     <div class="qld__header__site-name">
-                        <span class="qld__header__heading">Header</span>
-                        <span class="qld__header__subline">Subheading</span>
+                        <span class="qld__header__heading">{{ .Site.Params.header.header | default "Header" }}</span>
+                        <span class="qld__header__subline">{{ .Site.Params.header.subheader | default "Subheading" }}</span>
                     </div>
                 </a>
                 
@@ -116,10 +118,10 @@
 
 
 <!-- Main navigation bar -->
-<nav class="qld__main-nav qld__main-nav--mega" id="mainmenu">
+<nav class="qld__main-nav qld__main-nav--mega" id="#mainmenu" aria-label="main">
     <div class="container-fluid">
         <!-- Main navigation content wrapper -->
-        <div class="qld__main-nav__content" id="main-nav">
+        <div class="qld__main-nav__content qld__main-nav__content--closed" id="main-nav">
             <!-- Navigation menu wrapper -->
             <div class="qld__main-nav__menu">
                 <!-- Inner navigation menu wrapper -->
@@ -130,7 +132,8 @@
                     <div class="qld__main-nav__header">
                         <h2 class="qld__main-nav__menu-heading" tabindex="-1">Menu</h2>
                         <!-- Close button for the menu -->
-                        <button aria-controls="main-nav" class="qld__main-nav__toggle qld__main-nav__toggle--close">
+                        <button aria-controls="main-nav" class="qld__main-nav__toggle qld__main-nav__toggle--close"
+                            aria-expanded="true">
                             <!-- SVG icon for the close button -->
                             <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
                                 class="qld__icon qld__icon--md">

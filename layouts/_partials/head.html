@@ -1,5 +1,17 @@
+<head>
+  <meta charset="UTF-8">
+  <title>{{ .Title }}</title>
+  
+  {{ partialCached "head/css.html" . }}
+  {{ partialCached "head/js.html" . }}
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/banner_contained.css" | relURL }}">
+
+  <!-- Optional: Custom CSS -->
+  <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}">
+</head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
-{{ partialCached "head/css.html" . }}
-{{ partialCached "head/js.html" . }}
+
