@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   {{ partial "head.html" . }}
-<body class="qld__grid inside vertical-nav qld__form-style–outlined No">
+<body class="qld__body qld__grid inside vertical-nav qld__form-style-outlined No qld__full-height qld__display-lg-flex qld__flex-lg-column">
 
   {{ partial "header.html" .}}
 
-  <main class="main" role="main">
+  <main class="main landing qld__flex-lg-fill qld__justify-content-center" role="main">
     {{ block "main" . }}{{ end }}
   </main>
 
