@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-  {{ partial "head.html" . }}
-<body class="qld__body qld__grid inside vertical-nav qld__form-style-outlined No qld__full-height qld__display-lg-flex qld__flex-lg-column">
+<html lang="{{ .Site.Language.Lang | default "en" }}">
+  {{- partial "head.html" . -}}
+<body class="d-flex flex-column min-vh-100">
 
-  {{ partial "header.html" .}}
+  {{- partial "header.html" . -}}
+  {{- partial "navbar.html" . -}}
 
-  <main class="main landing qld__flex-lg-fill qld__justify-content-center" role="main">
-    {{ block "main" . }}{{ end }}
+  <main class="qld-body flex-fill" role="main">
+    {{- block "main" . }}{{- end }}
   </main>
 
-  {{ partial "footer.html" . }}
+  {{- partial "footer.html" . -}}
 
 </body>
 </html>
