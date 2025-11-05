@@ -7,11 +7,11 @@
             {{- if $main.logo -}}
             <img src="{{ $main.logo.src | relURL }}" height="56" alt="{{ with $main.logo.alttext }}{{ . }}{{ else }}Queensland government{{ end }}" />
             {{- else if $main.sitetitle -}}
-            <img class="qld-header-logo" height="56" alt="Queensland Government" src="{{ "img/header-logo-qgov--dark.svg" | relURL }}">
+            <img class="qld-header-logo" height="56" alt="Queensland Government" src="{{ "img/flax__teal_limited_logo.svg" | relURL }}">
             {{- else if $hdr.hasdeliveringforqldlogo -}}
-            <img class="qld-header-logo is-delivering-for-qld" height="56" alt="Queensland Government - Delivering for Queensland" src="{{ "img/header-logo-qgov--dark.svg" | relURL }}">
+            <img class="qld-header-logo is-delivering-for-qld" height="56" alt="Queensland Government - Delivering for Queensland" src="{{ "img/flax__teal_limited_logo.svg" | relURL }}">
             {{- else -}}
-            <img class="qld-header-logo" height="56" alt="Queensland Government" src="{{ "img/header-logo-qgov--dark.svg" | relURL }}">
+            <img class="qld-header-logo" height="56" alt="Queensland Government" src="{{ "img/flax__teal_limited_logo.svg" | relURL }}">
             {{- end -}}
         </div>
         {{- if $main.secondarylogo -}}

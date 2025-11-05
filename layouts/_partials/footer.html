@@ -1,163 +1,175 @@
-<!--
-  Dark:   <footer class="qld__footer qld__footer--dark" >
--->
+{{- $prm := .Site.Params -}}
+{{- $ftr := cond (isset $prm "footer") $prm.footer (dict) -}}
+{{- $contact := cond (isset $ftr "contact") $ftr.contact (dict) -}}
+{{- $opt1 := cond (isset $ftr "optionalColumn1") $ftr.optionalColumn1 (dict) -}}
+{{- $opt2 := cond (isset $ftr "optionalColumn2") $ftr.optionalColumn2 (dict) -}}
+{{- $footerLinks := cond (isset $ftr "footerLinks") $ftr.footerLinks (dict) -}}
+{{- $footerLogo := cond (isset $ftr "footerLogo") $ftr.footerLogo (dict) -}}
+{{- $acks := cond (isset $ftr "acknowledgements") $ftr.acknowledgements (slice) -}}
+{{- $org := cond (isset $ftr "organisationLink") $ftr.organisationLink (dict) -}}
+{{- $copyright := cond (isset $ftr "copyright") $ftr.copyright (dict) -}}
 
-<footer class="qld__footer qld__footer--dark" role="contentinfo">
-    
-    <!-- Section 1: Site title -->
-    <div class="container-fluid">
-        <div class="row qld__footer__row">
-            <div class="col-xs-12 qld__footer__column">
-                <div class="qld__footer__title">
-                    <h2 class="qld__footer__heading">{{ .Site.Title }}</h2>
-                </div>
-            </div>
-        </div>
+<footer class="qld-footer {{ $prm.variantClass }}" role="contentinfo">
+  <div class="container">
+    {{ if $prm.sitename }}
+    <div class="row">
+      <div class="col title">
+        <h2 class="footer-site-name">{{ $prm.sitename }}</h2>
+      </div>
     </div>
+    {{ end }}
 
-     <!-- Footer content container -->
-    <div class="container-fluid">
+    <div class="row">
+
+      <!-- Contact us Column -->
+      <div class="col-12 col-lg-3 py-24 py-lg-0 footer-contact {{ if $contact.hasBorderColumn }}border-column{{ end }}">
         <div class="row">
+          <div class="col col-lg-12">
+            <h3 class="footer-heading">{{ default "Contact us" $contact.title }}</h3>
 
-            <!-- Section 2: Contact us and Site wide CTAs -->
-            <div class="col-xs-12 col-lg-3 qld__footer__column">
-                <div class="container-fluid">
-                    <div class="row qld__footer-contact">
-                        <div class="col-xs-12 col-sm-8 col-lg-12">
-                            <h3 class="qld__footer__heading">Get in touch</h3> 
-                            <p class="qld__footer__cta-content">
-                                {{ with .Site.Params.footer.phone }}
-                                    <a href="tel:{{ . }}">
-                                        <svg class="qld__icon qld__icon--lead qld__icon--xs" aria-hidden="true">
-                                            <use href="img/QLD-icons.svg#phone"></use>
-                                        </svg>
-                                        Phone: {{ . }}
-                                    </a>
-                                {{ end }}
-                            </p>
-                            <p class="qld__footer__cta-content">
-                                {{ with .Site.Params.footer.email }}
-                                    <a href="mailto:{{ . }}">
-                                        <svg class="qld__icon qld__icon--lead qld__icon--xs" aria-hidden="true">
-                                            <use href="img/QLD-icons.svg#Email"></use>
-                                        </svg>
-                                        Email: {{ . }}
-                                    </a>
-                                {{ end }}
-                            </p>
-                        </div>
-                        <div class="col-xs-12 col-sm-4 col-lg-12">
-                            {{ with .Site.Params.footer.contact_url }}
-                                <a href="{{ . }}" class="qld__btn qld__btn--secondary">Contact us</a>
-                            {{ end }}
-                        </div>
-                    </div>
+            <div>
+              {{ $contactContent := default "<p>Get in touch for enquiries, feedback, complaints and compliments.</p>" $contact.content }}
+              {{ $contactContent | safeHTML }}
+            </div>
+          </div>
+
+          <div class="col col-lg-12 contact-btn order-lg-last d-flex d-lg-block mt-lg-32">
+            <a href="{{ default "https://www.qld.gov.au/contact-us" $contact.buttonLink }}" class="btn btn-outline-secondary">
+              {{ default "Contact us" $contact.buttonLabel }}
+            </a>
+          </div>
+
+          <div class="col-12">
+            {{- /* Custom contact list: if showList is not explicitly false and list exists, render it */ -}}
+            {{- if and (or (not (isset $contact "showList")) (ne $contact.showList false)) (isset $contact "list") (gt (len $contact.list) 0) -}}
+              {{- range $k, $it := $contact.list }}
+                <div class="footer-contact-item footer-contact-{{ $k }}">
+                  <span class="qld-icon {{ $it.icon }}" aria-hidden="true"></span> {{ $it.label | safeHTML }}
                 </div>
-            </div>
-            <!-- Section 3: Section links (Custom secondary nav items) -->
-            {{ with .Site.Params.footer.custom_links }}
-                {{ if .enabled }}
-                    <div class="col-xs-12 col-lg-2 qld__footer__column">
-                        <nav class="qld__footer__navigation" aria-label="footer navigation">
-                            <h3 class="sr-only">Custom links</h3>
-                            <ul class="qld__link-list">
-                                {{ range .links }}
-                                    <li>
-                                        <a class="qld__footer__clickable__link" href="{{ .url }}">{{ .name }}</a>
-                                    </li>
-                                {{ end }}
-                            </ul>
-                        </nav>
-                    </div>
-                {{ end }}
-            {{ end }}
-            <!-- Section 4: Mandatory QLD Government Links -->
-            <div class="col-xs-12 col-lg-2 qld__footer__column">
-                <nav class="qld__footer__navigation" aria-label="Queensland Government links">
-                <h3 class="sr-only">Queensland Government links</h3>
-                    <ul class="qld__link-list">
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://www.health.qld.gov.au/global/copyright-statement">Copyright</a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://www.health.qld.gov.au/global/disclaimer">Disclaimer</a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://www.health.qld.gov.au/global/privacy">Privacy</a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://www.health.qld.gov.au/system-governance/contact-us/access-info">Right to information</a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://www.qld.gov.au/help/accessibility/">Accessibility</a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://smartjobs.qld.gov.au/jobtools/jncustomsearch.jobsearch?in_organid=14904">Jobs</a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="https://www.qld.gov.au/languages/">Other languages</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <!-- Section 5: Social media and engagment -->
-            <div class="col-xs-12 col-lg-2 qld__footer__column">
-                <nav class="qld__footer__social" aria-label="social media links">
-                    <h3 class="qld__footer__heading">Follow us</h3>
-                    <ul class="qld__link-list">
-                        <li>
-                            <a class="qld__footer__clickable__link" href="#">
-                                    <svg class="qld__icon qld__icon--md" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="img/QLD-icons.svg#Facebook"></use></svg>
-                                <span class="qld__footer__social__label">Facebook</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="#">
-                                    <svg class="qld__icon qld__icon--md" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="img/QLD-icons.svg#Instagram"></use></svg>
-                                <span class="qld__footer__social__label">Instagram</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="#">
-                                    <svg class="qld__icon qld__icon--md" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="img/QLD-icons.svg#LinkedIn"></use></svg>
-                                <span class="qld__footer__social__label">LinkedIn</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="#">
-                                    <svg class="qld__icon qld__icon--md" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="img/QLD-icons.svg#YouTube"></use></svg>
-                                <span class="qld__footer__social__label">Youtube</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="qld__footer__clickable__link" href="#">
-                                    <svg class="qld__icon qld__icon--md" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="img/QLD-icons.svg#X"></use></svg>
-                                <span class="qld__footer__social__label">Twitter</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <!-- Section 6: Aknowlegement, Qld Government Coat of Arms and Copyright information -->
-            <div class="col-xs-12 qld__footer__column">
-                <div>                  
-                    <h3 class="qld__footer__heading">
-                        Acknowledgement of Country
-                    </h3>
-                    <p class="qld__footer__acknowledgements">
-                        Queensland Government acknowledges the Traditional Owners of the land and pays respect to Elders past, present and future.
-                    </p>      
-                    <a class="qld__footer__logo" href="https://www.qld.gov.au/">
-                        <img class="qld__footer__logo-image" alt="Queensland Government Coat of Arms" src="{{ "img/header-logo-qgov--light.svg" | relURL }}">                    
-                    </a>
-                    <h3 class="sr-only">Copyright statement</h3>
-                    <p class="qld__footer__copyrightMessage">
-                        © The State of Queensland 1995-2024 (Organisation) Queensland Government
-                    </p>
-                    <a class="qld__footer__clickable__link qld__footer__copyright-link" href="https://www.qld.gov.au/" rel="external">Queensland Government</a>                                            
-                </div>
-            </div> 
+              {{- end }}
+            {{- else }}
+              <div class="footer-contact-item footer-contact-phone">
+                <span class="qld-icon qld-icon-phone" aria-hidden="true"></span>
+                <b>Phone:</b>
+                <a href="tel:137468" rel="noopener">13 QGOV (13 74 68)</a>
+              </div>
+
+              <div class="footer-contact-item footer-contact-email">
+                <span class="qld-icon qld-icon-email" aria-hidden="true"></span>
+                <b>Email:</b>
+                <a href="mailto:email@qld.gov.au" rel="noopener"><span class="user-select-all">email@qld.gov.au</span></a>
+              </div>
+            {{- end }}
+          </div>
         </div>
+      </div>
+
+      {{- /* Optional Column 1 */ -}}
+      {{- if or (isset $opt1 "content") (isset $opt1 "showFollowLinks") (isset $opt1 "showCustomLinks") }}
+      <div class="col-12 col-lg-2 optional-column-1 {{ if $opt1.hasBorderColumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt1.title }}">
+        <div class="footer-column pe-16">
+          {{ if $opt1.title }}<h3 class="footer-heading">{{ $opt1.title }}</h3>{{ end }}
+          <div class="footer-content">
+            {{ if $opt1.content }}{{ $opt1.content | safeHTML }}{{ end }}
+            {{ if $opt1.showFollowLinks }}
+              {{/* follow links: implement if you have params.followLinks */}}
+            {{ end }}
+            {{ if $opt1.showCustomLinks }}
+              {{/* custom links: implement if you have opt1.customLinks */}}
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      {{- end }}
+
+      <!-- WoG links -->
+      <div class="col-12 col-lg-2 {{ if $footerLinks.hasBorderColumn }}border-column{{ end }}" aria-label="footer-navigation">
+        <div class="footer-column pe-lg-16">
+          {{ if and (isset $footerLinks "list") (gt (len $footerLinks.list) 0) }}
+            {{ if $footerLinks.title }}<h3 class="footer-heading">{{ $footerLinks.title }}</h3>{{ end }}
+            <ul class="nav footer-link-list flex-column pt-lg-2">
+              {{- range $footerLinks.list }}
+                <li><a class="nav-link" href="{{ .link }}" {{ if .target }} target="{{ .target }}"{{ end }}>{{ .label }}</a></li>
+              {{- end }}
+            </ul>
+          {{ else }}
+            <ul class="nav footer-link-list flex-column">
+              <li><a class="nav-link" href="https://www.qld.gov.au/help">Help</a></li>
+              <li><a class="nav-link" href="https://www.qld.gov.au/legal/copyright">Copyright</a></li>
+              <li><a class="nav-link" href="https://www.qld.gov.au/legal/disclaimer">Disclaimer</a></li>
+              <li><a class="nav-link" href="https://www.qld.gov.au/legal/privacy">Privacy</a></li>
+              <li><a class="nav-link" href="https://www.qld.gov.au/about/rights-accountability/right-to-information">Right to information</a></li>
+              <li><a class="nav-link" href="https://www.qld.gov.au/help/accessibility">Accessibility</a></li>
+              <li><a class="nav-link" href="https://smartjobs.qld.gov.au" target="_blank">Jobs in Queensland Government</a></li>
+              <li><a class="nav-link" href="https://www.qld.gov.au/help/languages">Other languages</a></li>
+            </ul>
+          {{ end }}
+        </div>
+      </div>
+
+      {{- /* Optional Column 2 */ -}}
+      {{- if or (isset $opt2 "content") (isset $opt2 "showFollowLinks") (isset $opt2 "showCustomLinks") }}
+      <div class="col-12 col-lg-2 optional-column-2 {{ if $opt2.hasBorderColumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt2.title }}">
+        <div class="footer-column pe-lg-16">
+          {{ if $opt2.title }}<h3 class="footer-heading">{{ $opt2.title }}</h3>{{ end }}
+          <div class="footer-content">
+            {{ if $opt2.content }}{{ $opt2.content | safeHTML }}{{ end }}
+            {{ if $opt2.showFollowLinks }}{{/* follow links */}}{{ end }}
+            {{ if $opt2.showCustomLinks }}{{/* custom links */}}{{ end }}
+          </div>
+        </div>
+      </div>
+      {{- end }}
+
+      <!-- Acknowledgement of Country -->
+      <div class="col crest">
+        <div class="footer-column">
+          <div class="footer-content">
+            <div class="footer-acknowledgements">
+              {{ if gt (len $acks) 0 }}
+                {{ range $acks }}
+                  {{ if .title }}<h3 class="footer-heading">{{ .title }}</h3>{{ end }}
+                  {{ if .content }}{{ .content | safeHTML }}{{ end }}
+                {{ end }}
+              {{ else }}
+                <p>We pay our respects to the Aboriginal and Torres Strait Islander ancestors of this land, their
+                spirits and their legacy. The foundations laid by these ancestors—our First Nations peoples—give
+                strength, inspiration and courage to current and future generations towards creating a better
+                Queensland.</p>
+              {{ end }}
+            </div>
+
+            {{- /* Footer Logo */ -}}
+            {{ if $footerLogo.src }}
+              <div class="footer-logo">
+                <img src="{{ $footerLogo.src }}" alt="{{ $footerLogo.alt }}" class="img-fluid" />
+              </div>
+            {{ else if $footerLogo.show }}
+              <div class="footer-crest">
+                {{/* Logo partial could go here if available */}}
+              </div>
+            {{ end }}
+
+            {{- /* Footer Copyright */ -}}
+            {{ if isset $copyright "content" }}
+              <p class="copyright">{{ $copyright.content | safeHTML }}{{ if $copyright.showYearFrom }} {{ $copyright.yearFrom }} -{{ end }} {{ now.Format "2006" }}</p>
+            {{ else }}
+              <p class="copyright">© The State of Queensland {{ now.Format "2006" }}</p>
+            {{ end }}
+
+            {{- /* Organisation Link */ -}}
+            {{ if isset $org "show" }}
+              <p>
+                <a class="fw-semibold" href="{{ default "https://www.qld.gov.au" $org.URL }}" rel="external">
+                  {{ default "Queensland Government" $org.text }}
+                </a>
+              </p>
+            {{ end }}
+
+          </div>
+        </div>
+      </div>
 
     </div>
+  </div>
 </footer>
