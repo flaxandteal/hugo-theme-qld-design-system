@@ -1,202 +1,113 @@
-<!-- Main header container with banner role -->
-<header class="qld__header horizontal-example" role="banner">
+<header class="qld-header" role="banner">
+    {{- $hdr := .Site.Params.header -}}
 
-    <!-- Navigation bar for skip links -->
-    <nav class="qld__skip-link" aria-label="skip links" tabindex="-1">
-        <a class="qld__skip-link__link" href="#content">Skip to main content</a>
-        <a class="qld__skip-link__link" href="#main-nav">Skip to main navigation</a>
-    </nav>
+    {{- $pre := cond (isset $hdr "preheader") $hdr.preheader (dict) -}}
+    {{- $prePal := cond (isset $pre "palette") (lower $pre.palette) "default" -}}
+    <div class="qld-header-pre-header {{ if eq $prePal "auto" }}auto{{ else if eq $prePal "dark" }}dark{{ else if eq $prePal "dark-alt" }}dark-alt{{ else }}default{{ end }}" data-palette="{{ $prePal }}">
+        <div class="container">
+            <div class="d-flex justify-content-between">
 
-    <!-- Pre-header section with logo and links -->
-    <div class="qld__header__pre-header qld__header__pre-header--dark">
-        <div class="container-fluid">
+                <a class="qld-header-link align-self-center" href="{{ with $pre.globallink.url }}{{ . }}{{ else }}https://qld.gov.au{{ end }}">
+                    <span class="d-none d-lg-inline">{{ with $pre.globallink.text }}{{ . }}{{ end }}</span>
 
-            <!-- Government link and logo used for mobile display -->
-            <a href="https://www.qld.gov.au">
-                <span class="qld__header__pre-header-url">qld.gov.au</span>
-                <!-- Local pre-header brand image (copy upstream image to static/img/qld-gov-logo.svg) -->
-                <img class="qld__header__pre-header-brand-image" alt="Queensland Government" src="{{ "img/header-logo-qgov--light.svg" | relURL }}">
-                
-            </a>
-
-            <!-- CTA wrapper for right aligned links in the preheader -->
-            <div class="qld__header__cta-wrapper">
-                <a class="qld__header__cta-link" href="javascript:void(0)">
-                    <span class="qld__header__cta-link-icon">
-                        <svg class="qld__icon qld__icon--lead qld__icon--xs" aria-hidden="true">
-                            <use href="img/QLD-icons.svg#phone"></use>
-                        </svg>
-                    </span>
-                    <span class="qld__header__cta-link-text">Contact us</span>
+                    {{ if $hdr.hasdeliveringforqldlogo }}
+                        <img class="qld-header-logo is-delivering-for-qld" alt="Queensland Government" src="{{ with $pre.logo }}{{ . | relURL }}{{ else }}{{ "img/header-logo-qgov--light.svg" | relURL }}{{ end }}">
+                    {{ else }}
+                        <img class="qld-header-logo" alt="Queensland Government" src="{{ with $pre.logo }}{{ . | relURL }}{{ else }}{{ "img/header-logo-qgov--light.svg" | relURL }}{{ end }}">
+                    {{ end }}
                 </a>
-            </div>
 
-            <!-- Main navigation controls (Search and Menu buttons on mobile and tablet screens) -->
-            <div class="qld__header__main-nav-controls">
-                <!-- Search button -->
-                <button aria-controls="qld-header-search"
-                    class="qld__header__toggle-main-nav qld__main-nav__toggle-search qld__main-nav__toggle-search--open"
-                    aria-expanded="false">
-                    <!-- Search and close icons -->
-                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
-                        class="qld__icon qld__main-nav__toggle-search-icon">
-                        <!-- Local SVG sprite: copy QLD-icons.svg to static/img/QLD-icons.svg -->
-                        <use href="{{ "img/QLD-icons.svg" | relURL }}#search"></use>
-                    </svg>
-                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
-                        class="qld__icon qld__main-nav__toggle-search-close-icon">
-                        <use href="{{ "img/QLD-icons.svg" | relURL }}#close"></use>
-                    </svg>
-                    <!-- Search button label -->
-                    <span class="qld__main-nav__toggle-text">Search</span>
-                </button>
+                {{ with $pre.actions }}
+                    <div class="d-none d-lg-flex align-items-baseline">
+                        {{ range . }}
+                            {{ if .dropdown }}
+                                <div class="dropdown">
+                                    <a id="dropdown{{ .id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="qld-header-link dropdown-toggle" href="#">{{ .text | safeHTML }}</a>
 
-                <!-- Menu button -->
-                <button aria-controls="main-nav" class="qld__header__toggle-main-nav qld__main-nav__toggle--open">
-                    <!-- Menu icon -->
-                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
-                        class="qld__icon">
-                        <use href="{{ "img/QLD-icons.svg" | relURL }}#menu"></use>
-                    </svg>
-                    <!-- Menu button label -->
-                    <span class="qld__main-nav__toggle-text">Menu</span>
-                </button>
-            </div>
-        </div>
-    </div>
+                                    {{ if eq .dropdown.type "list" }}
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            {{ range .dropdown.items }}
+                                                <li>
+                                                    <a class="qld-header-link dropdown-item" href="{{ .url }}"{{ if .target }} target="{{ .target }}"{{ end }}>{{ .text }}</a>
+                                                </li>
+                                            {{ end }}
 
-
-    <!-- Main header section -->
-    <div class="qld__header__main">
-        <div class="container-fluid">
-
-            <!-- Header brand section -->
-            <div class="qld__header__brand">
-              
-                <a href="https://www.choreport.health.qld.gov.au">
-                    <!-- QLD Government logo -->
-                    <div class="qld__header__brand-image">
-                    <img src="{{ "img/header-logo-qgov--dark.svg" | relURL }}" alt="Queensland Goverment">
+                                            {{ with .dropdown.viewMore }}
+                                                <li>
+                                                    <a href="{{ .url }}"{{ if .target }} target="{{ .target }}"{{ end }} class="qld-header-link dropdown-item border-bottom-0">{{ .text }}</a>
+                                                </li>
+                                            {{ end }}
+                                        </ul>
+                                    {{ else if or (eq .dropdown.type "html") (eq .dropdown.type "form") }}
+                                        <div class="dropdown-menu dropdown-menu-end">{{ .dropdown.HTMLContent | safeHTML }}</div>
+                                    {{ end }}
+                                </div>
+                            {{ else }}
+                                <a class="qld-header-link ms-16" href="{{ .url }}">{{ if .icon }}<span class="qld-icon qld-icon-{{ .icon }} qld-icon-sm qld-header-link-icon" aria-hidden="true"></span>{{ end }}{{ .text | safeHTML }}</a>
+                            {{ end }}
+                        {{ end }}
                     </div>
-                    <!-- Site name and description -->
-                    <div class="qld__header__site-name">
-                        <span class="qld__header__heading">{{ .Site.Params.header.header | default "Header" }}</span>
-                        <span class="qld__header__subline">{{ .Site.Params.header.subheader | default "Subheading" }}</span>
-                    </div>
-                </a>
-                
-            </div>
+                {{ end }}
 
-            <!-- Search form section -->
-            <div class="qld__header__search" id="qld-header-search">
-                <div class="qld__main-nav__focus-trap-top"></div>
-            
-                <div class="qld__search-form--wrapper">
-                    <form role="search" aria-label="sitewide" class="qld__search-form" id="search-input-global-header" action="#">
-                        <label for="search-input-global-header-query"
-                            class="qld__label qld__display-lg qld__search-form__label">Search this website</label>
-                        <div class="qld__search-form__inner">
-                            <input type="search" id="search-input-global-header-query" name="query"
-                                class="qld__text-input data-hj-allow" autocomplete="off">
-                            <input type="text" id="name" name="name" autocomplete="off" tabindex="-1"
-                                class="qld__text-input--validation">
-                            <div class="qld__search-form__btn">
-                                <button class="qld__btn qld__btn--search" type="submit" aria-label="Search">
-                                    <span class="qld__btn__icon"></span>
-                                    <span class="qld__btn__text">Search</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="qld-header-mobile-controls">
+                    {{ if and (isset $hdr "assets") (isset $hdr.assets "sitesearch") (isset $hdr.assets.sitesearch "value") }}
+                        {{ if $hdr.assets.sitesearch.value }}
+                            <button id="qld-header-toggle-search-button" aria-controls="qld-header-search" class="qld-header-mobile-button is-search-toggle" aria-expanded="false" aria-label="Open search">Search</button>
+                        {{ end }}
+                    {{ end }}
+
+                    <button id="burgerBtn" class="qld-header-mobile-button is-menu-toggle" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">Menu</button>
                 </div>
-                <div class="qld__main-nav__focus-trap-bottom"></div>
             </div>
         </div>
     </div>
 
+    {{- $main := cond (isset $hdr "maincontent") $hdr.maincontent (dict) -}}
+    {{- $mainPal := cond (isset $main "palette") (lower $main.palette) "default" -}}
+    <div class="qld-header-main {{ if eq $mainPal "auto" }}auto{{ else if eq $mainPal "dark" }}dark{{ else if eq $mainPal "dark-alt" }}dark-alt{{ else }}default{{ end }}" data-palette="{{ $mainPal }}">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col">
+                    {{ partial "headerBrand.html" . }}
+                </div>
+
+                {{ if and (isset $hdr "assets") (isset $hdr.assets "sitesearch") (isset $hdr.assets.sitesearch "value") $hdr.assets.sitesearch.value }}
+                    <div class="col-lg-4">
+                        <div id="qld-header-search" class="qld-header-site-search is-closed">
+                            <form class="site-search" role="search" action="{{ with $hdr.assets.sitesearch.formaction.url }}{{ . }}{{ else }}https://www.qld.gov.au/search{{ end }}">
+                                {{ with $hdr.searchinput }}{{ . | safeHTML }}{{ end }}
+                            </form>
+                        </div>
+                    </div>
+                {{ end }}
+            </div>
+        </div>
+    </div>
 </header>
 
-
-<!-- Main navigation bar -->
-<nav class="qld__main-nav qld__main-nav--mega" id="#mainmenu" aria-label="main">
-    <div class="container-fluid">
-        <!-- Main navigation content wrapper -->
-        <div class="qld__main-nav__content qld__main-nav__content--closed" id="main-nav">
-            <!-- Navigation menu wrapper -->
-            <div class="qld__main-nav__menu">
-                <!-- Inner navigation menu wrapper -->
-                <div class="qld__main-nav__menu-inner">
-                    <!-- Focus trap for accessibility purposes (keyboard navigation) -->
-                    <div class="qld__main-nav__focus-trap-top"></div>
-                    <!-- Navigation header which contains menu title and close button -->
-                    <div class="qld__main-nav__header">
-                        <h2 class="qld__main-nav__menu-heading" tabindex="-1">Menu</h2>
-                        <!-- Close button for the menu -->
-                        <button aria-controls="main-nav" class="qld__main-nav__toggle qld__main-nav__toggle--close"
-                            aria-expanded="true">
-                            <!-- SVG icon for the close button -->
-                            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
-                                class="qld__icon qld__icon--md">
-                                <use href="{{ "img/QLD-icons.svg" | relURL }}#close"></use>
-                            </svg>
-                            <span class="qld__main-nav__toggle-text">Close</span>
-                        </button>
-                    </div>
-                    <!-- Navigation link list (populated from site config `menu.main`) -->
-                    <ul class="qld__link-list qld__link-list--flex">
-                        {{ $menu := .Site.Menus.main }}
-                        {{ if $menu }}
-                            {{ range $menu }}
-                                <li class="qld__main-nav__item">
-                                    <div class="qld__main-nav__item-title">
-                                        <a class="qld__main-nav__item-link" href="{{ .URL }}" {{ if .Pre }}rel="nofollow"{{ end }}>
-                                            {{ if .Identifier | eq "home" }}
-                                                <span class="qld__main-nav__item-icon">
-                                                    <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" class="qld__icon qld__icon--md">
-                                                        <use href="{{ "img/QLD-icons.svg" | relURL }}#home"></use>
-                                                    </svg>
-                                                </span>
-                                            {{ end }}
-                                            <span class="qld__main-nav__item-text">{{ .Name }}</span>
-                                        </a>
-                                    </div>
-                                </li>
-                            {{ end }}
-                        {{ else }}
-                            <!-- Fallback hard-coded items if no menu is configured -->
-                            <li class="qld__main-nav__item ">
-                                <div class="qld__main-nav__item-title">
-                                    <a class="qld__main-nav__item-home qld__main-nav__item-link"  aria-label="Home" href="#">
-                                        <!-- SVG icon for the link -->
-                                        <span class="qld__main-nav__item-icon">
-                                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
-                                                    class="qld__icon qld__icon--md">
-                                                    <use href="{{ "img/QLD-icons.svg" | relURL }}#home"></use>
-                                                </svg>
-                                        </span>
-                                        <span class="qld__main-nav__item-text" data-name="">Home</span>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="qld__main-nav__item">
-                                <div class="qld__main-nav__item-title">
-                                    <a class="qld__main-nav__item-link" href="#">Category page 1</a>
-                                </div>
-                            </li>
-                            <li class="qld__main-nav__item">
-                                <div class="qld__main-nav__item-title">
-                                    <a class="qld__main-nav__item-link" href="#">Category page 2</a>
-                                </div>
-                            </li>
-                        {{ end }}
-                    </ul>
-                    <!-- ... More elements like call-to-action or additional navigations could go here ... -->
-                    <!-- Focus trap for accessibility purposes (keyboard navigation) -->
-                    <div class="qld__main-nav__focus-trap-bottom"></div>
-                </div>
-            </div>
-            <!-- Overlay element, which usually displayed when menu is open -->
-            <div class="qld__main-nav__overlay" aria-controls="main-nav"></div>
-        </div>
-    </div>
-</nav>
+{{/* If any header section uses palette = "auto" then apply the user's system preference */}}
+<script>
+(function(){
+    function applyPref(el){
+        try{
+            var pref = el.getAttribute('data-palette');
+            if(pref !== 'auto') return;
+            var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var chosen = isDark ? 'dark' : 'default';
+            el.classList.remove('auto','default','dark','dark-alt');
+            el.classList.add(chosen);
+        }catch(e){/* ignore in old browsers */}
+    }
+    function init(){
+        var nodes = document.querySelectorAll('[data-palette="auto"]');
+        nodes.forEach(applyPref);
+        if(window.matchMedia){
+            var mq = window.matchMedia('(prefers-color-scheme: dark)');
+            var listener = function(){ nodes.forEach(applyPref); };
+            if(mq.addEventListener) mq.addEventListener('change', listener);
+            else if(mq.addListener) mq.addListener(listener);
+        }
+    }
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
