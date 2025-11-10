@@ -1,0 +1,14 @@
+<section class="container py-64">
+    <div class="row">
+        <h2>{{ .title }}</h2>
+        <section class="link-column bg-light">
+            <ul class="nav col-vert-6">
+                {{ range .links }}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ .url | default "#" }}">{{ .title }}</a>
+                </li>
+                {{ end }}
+            </ul>
+        </section>
+    </div>
+</section>

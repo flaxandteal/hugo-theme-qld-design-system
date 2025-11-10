@@ -1,0 +1,19 @@
+{{ $title := .title }}
+{{ $text := .text }}
+{{ $showImage := .showImage }}
+
+<section class="py-64">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-{{ if $showImage }}6{{ else }}12{{ end }}">
+                <h2>{{ $title }}</h2>
+                <p>{{ $text }}</p>
+            </div>
+            {{ if $showImage }}
+            <div class="col-sm-8 offset-sm-2 offset-lg-0 col-lg-6">
+                <img src="img/peanut-silo.jpg" alt="Peanut Silo" width="100%" height="auto">
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
