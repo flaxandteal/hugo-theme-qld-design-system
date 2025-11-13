@@ -1,15 +1,17 @@
-<div class="search-filter p-4 mt-sm-4">
+<div class="search-filter px-4 pt-4 mt-sm-4 mt-lg-0">
     <h3 class="search-filter-title">Search</h3>
     {{ partial "search-input.html" }}
-    <div class="d-flex justify-content-end">
-        <a id="filterToggle" href="#" class="dropdown-toggle dark" aria-expanded="false">Filter</a>
+    <div class="d-flex justify-content-end align-items-center">
+        <ul id="active-filters" class="tag-list tag-dark my-0 p-0 me-4">
+        </ul>
+        <a id="filterToggle" href="#" class="dropdown-toggle dark" aria-expanded="false">Filters</a>
     </div>
-    <div class="filter-content" id="filterContent">
+    <div class="filter-content my-2" id="filterContent">
         <ul class="tag-list tag-dark p-4 my-2">
-            <li class="tag-item tag-link selected tag" data-content="record-type-content">
+            <li class="tag-item tag-link tag-large selected tag" data-content="record-type-content">
                 <a href='javascript:void(0)'>Record Type</a>
             </li>
-            <li class="tag-item tag-link tag" data-content="category-content">
+            <li class="tag-item tag-link tag-large tag" data-content="category-content">
                 <a href='javascript:void(0)' class="tag active">Category</a>
             </li>
         </ul>
@@ -17,44 +19,51 @@
             <div id="record-type-content" class="content-item active">
                 <div class="dark p-16 d-flex flex-wrap flex-column filter-options-wrap">
                     <div class="form-check ">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType1" value="1" checked>
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType1"
+                            value="1" checked>
                         <label class="form-check-label" for="radioRecordType1">
                             All
                         </label>
                     </div>
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType2" value="2">
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType2"
+                            value="2">
                         <label class="form-check-label" for="radioRecordType2">
                             Option 2
                         </label>
                     </div>
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType3" value="3">
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType3"
+                            value="3">
                         <label class="form-check-label" for="radioRecordType3">
                             Option 3
                         </label>
                     </div>
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType4" value="4">
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType4"
+                            value="4">
                         <label class="form-check-label" for="radioRecordType4">
                             Option 4
                         </label>
                     </div>
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType4" value="4">
-                        <label class="form-check-label" for="radioRecordType4">
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType5"
+                            value="4">
+                        <label class="form-check-label" for="radioRecordType5">
                             Option 5
                         </label>
                     </div>
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType4" value="4">
-                        <label class="form-check-label" for="radioRecordType4">
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType6"
+                            value="4">
+                        <label class="form-check-label" for="radioRecordType6">
                             Option 6
                         </label>
                     </div>
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType4" value="4">
-                        <label class="form-check-label" for="radioRecordType4">
+                        <input class="form-check-input" type="radio" name="recordTypeOption" id="radioRecordType7"
+                            value="4">
+                        <label class="form-check-label" for="radioRecordType7">
                             Option 7
                         </label>
                     </div>
@@ -64,7 +73,7 @@
                 <div class="dark p-16 d-flex flex-wrap flex-column filter-options-wrap">
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="categoryOption" id="radioItem1" value="1"
-                        checked>
+                            checked>
                         <label class="form-check-label" for="radioItem1">
                             All
                         </label>
@@ -92,40 +101,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.getElementById('filterToggle').addEventListener('click', function (event) {
-        event.preventDefault();
-
-        const filterContent = document.getElementById('filterContent');
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-
-        this.setAttribute('aria-expanded', !isExpanded);
-        filterContent.style.display = isExpanded ? 'none' : 'block';
-
-        if (filterContent.classList.contains('expanded')) {
-            filterContent.classList.remove('expanded');
-        } else {
-            filterContent.classList.add('expanded');
-        }
-    });
-
-    document.querySelectorAll('.tag').forEach(tag => {
-        tag.addEventListener('click', function () {
-            document.querySelectorAll('.tag').forEach(t => t.classList.remove('selected'));
-
-            // Add 'selected' class to the clicked tag
-            this.classList.add('selected');
-
-            // Hide all content items
-            document.querySelectorAll('.content-item').forEach(content => content.classList.remove('active'));
-
-            // Show the content linked to the clicked tag
-            const contentId = this.getAttribute('data-content');
-            const contentToShow = document.getElementById(contentId);
-            if (contentToShow) {
-                contentToShow.classList.add('active');
-            }
-        });
-    });
-</script>
