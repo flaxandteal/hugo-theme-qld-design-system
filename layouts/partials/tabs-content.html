@@ -47,21 +47,17 @@
         </section>
         <section class="tab-pane fade " id="location-234566-tab-pane" role="tabpanel"
             aria-labelledby="Tab label location-tab" tabindex="0">
-            <h3>Section Heading Item 2</h3>
-            <p>Lorem ipsum dolor sit amet consectetur. Viverra eu pulvinar a eu mauris ac at ultricies est.
-                Tincidunt
-                ultrices commodo vestibulum non netus. Mauris maecenas lacus hendrerit urna ultricies auctor. Sed
-                tristique nascetur sapien condimentum adipiscing augue quisque eu. Facilisi ligula quam faucibus
-                feugiat. Sapien at at eget malesuada senectus donec pellentesque pellentesque odio.</p>
+            <div id="map" class="full-width-content">
+                {{ partial "asset-overview.html" }}
+            </div>
+            {{ partial "asset-accordion.html" . }}
         </section>
         <section class="tab-pane fade " id="related-resources-234566-tab-pane" role="tabpanel"
             aria-labelledby="Tab label related-resources-tab" tabindex="0">
-            <h3>Section Heading Item 3</h3>
-            <p>Lorem ipsum dolor sit amet consectetur. Viverra eu pulvinar a eu mauris ac at ultricies est.
-                Tincidunt
-                ultrices commodo vestibulum non netus. Mauris maecenas lacus hendrerit urna ultricies auctor. Sed
-                tristique nascetur sapien condimentum adipiscing augue quisque eu. Facilisi ligula quam faucibus
-                feugiat. Sapien at at eget malesuada senectus donec pellentesque pellentesque odio.</p>
+            <div class="full-width-content">
+                {{ partial "asset-overview.html" }}
+            </div>
+            {{ partial "asset-accordion.html" . }}
         </section>
     </div>
 </section>
