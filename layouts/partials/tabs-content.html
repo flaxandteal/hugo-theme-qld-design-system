@@ -1,0 +1,67 @@
+<section class="qld-tabs container-tabs default">
+    <div class="tabs-area container">
+        <ul class="nav nav-tabs " role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
+                    data-bs-target="#overview-234566-tab-pane" type="button" role="tab"
+                    aria-controls="#Tab label overview-pane" aria-selected="true">
+                    <span>
+                        <i class="qld-icon qld-icon-md qld-icon-image"></i>
+                        Overview</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="location-tab" data-bs-toggle="tab"
+                    data-bs-target="#location-234566-tab-pane" type="button" role="tab"
+                    aria-controls="#Tab label location-pane" aria-selected="false">
+                    <span>
+                        <i class="qld-icon qld-icon-md qld-icon-location"></i>
+                        Location</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="related-resources-tab" data-bs-toggle="tab"
+                    data-bs-target="#related-resources-234566-tab-pane" type="button" role="tab"
+                    aria-controls="#Tab label related-resources-pane" aria-selected="false">
+                    <span>
+                        <i class="qld-icon qld-icon-md qld-icon-calendar"></i>
+                        Related Resources</span>
+                </button>
+            </li>
+        </ul>
+        <button class="scroll scroll-left" aria-hidden="true" aria-label="Scroll tab buttons left" tabindex="-1">
+            <i></i>
+        </button>
+        <button class="scroll scroll-right" aria-hidden="true" aria-label="Scroll tab buttons right" tabindex="-1">
+            <i></i>
+        </button>
+    </div>
+    <div class="tab-content pt-0 border-0 container">
+        <section class="tab-pane fade show active" id="overview-234566-tab-pane" role="tabpanel"
+            aria-labelledby="Tab label overview-tab" tabindex="0">
+            <div class="full-width-content">
+                {{ partial "asset-overview.html" }}
+            </div>
+            {{ partial "asset-accordion.html" . }}
+            
+        </section>
+        <section class="tab-pane fade " id="location-234566-tab-pane" role="tabpanel"
+            aria-labelledby="Tab label location-tab" tabindex="0">
+            <h3>Section Heading Item 2</h3>
+            <p>Lorem ipsum dolor sit amet consectetur. Viverra eu pulvinar a eu mauris ac at ultricies est.
+                Tincidunt
+                ultrices commodo vestibulum non netus. Mauris maecenas lacus hendrerit urna ultricies auctor. Sed
+                tristique nascetur sapien condimentum adipiscing augue quisque eu. Facilisi ligula quam faucibus
+                feugiat. Sapien at at eget malesuada senectus donec pellentesque pellentesque odio.</p>
+        </section>
+        <section class="tab-pane fade " id="related-resources-234566-tab-pane" role="tabpanel"
+            aria-labelledby="Tab label related-resources-tab" tabindex="0">
+            <h3>Section Heading Item 3</h3>
+            <p>Lorem ipsum dolor sit amet consectetur. Viverra eu pulvinar a eu mauris ac at ultricies est.
+                Tincidunt
+                ultrices commodo vestibulum non netus. Mauris maecenas lacus hendrerit urna ultricies auctor. Sed
+                tristique nascetur sapien condimentum adipiscing augue quisque eu. Facilisi ligula quam faucibus
+                feugiat. Sapien at at eget malesuada senectus donec pellentesque pellentesque odio.</p>
+        </section>
+    </div>
+</section>
