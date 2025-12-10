@@ -1,5 +1,5 @@
 <div class="row">
-<div class="qld-banner qld-banner-grid banner-default {{ .theme | default "dark" }} banner-radius">
+<div class="qld-banner qld-banner-grid banner-default {{ .Params.theme | default "dark" }} banner-radius">
   <div class="container-fluid">
     <div class="banner-inner">
       <div class="banner-breadcrumbs">
@@ -14,11 +14,11 @@
       </div>
       <div class="banner-content">
         <h1 class="banner-title-wrap ">
-          <span class="banner-title">{{ .title }}</span>
+          <span class="banner-title">{{ .Params.title }}</span>
         </h1>
-        {{ if .text }}
+        {{ if .Params.text }}
         <div class="banner-abstract">
-          {{ .text }}
+          {{ .Params.text }}
         </div>
         {{ end }}
       </div>
