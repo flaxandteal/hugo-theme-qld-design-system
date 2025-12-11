@@ -1,15 +1,15 @@
 {{- $prm := .Site.Params -}}
-{{- $ftr := cond (isset $prm "footer") $prm.footer (dict) -}}
-{{- $contact := cond (isset $ftr "contact") $ftr.contact (dict) -}}
-{{- $opt1 := cond (isset $ftr "optionalColumn1") $ftr.optionalColumn1 (dict) -}}
-{{- $opt2 := cond (isset $ftr "optionalColumn2") $ftr.optionalColumn2 (dict) -}}
-{{- $footerLinks := cond (isset $ftr "footerLinks") $ftr.footerLinks (dict) -}}
-{{- $footerLogo := cond (isset $ftr "footerLogo") $ftr.footerLogo (dict) -}}
-{{- $acks := cond (isset $ftr "acknowledgements") $ftr.acknowledgements (slice) -}}
-{{- $org := cond (isset $ftr "organisationLink") $ftr.organisationLink (dict) -}}
-{{- $copyright := cond (isset $ftr "copyright") $ftr.copyright (dict) -}}
+{{- $ftr := default (dict) $prm.footer -}}
+{{- $contact := default (dict) $ftr.contact -}}
+{{- $opt1 := default (dict) $ftr.optionalcolumn1 -}}
+{{- $opt2 := default (dict) $ftr.optionalcolumn2 -}}
+{{- $footerLinks := default (dict) $ftr.footerlinks -}}
+{{- $footerLogo := default (dict) $ftr.footerlogo -}}
+{{- $acks := default (slice) $ftr.acknowledgements -}}
+{{- $org := default (dict) $ftr.organisationlink -}}
+{{- $copyright := default (dict) $ftr.copyright -}}
 
-<footer class="qld-footer {{ $prm.variantClass }}" role="contentinfo">
+<footer class="qld-footer {{ $prm.variantclass }}" role="contentinfo">
   <div class="container">
     {{ if $prm.sitename }}
     <div class="row">
@@ -22,7 +22,7 @@
     <div class="row">
 
       <!-- Contact us Column -->
-      <div class="col-12 col-lg-3 py-24 py-lg-0 footer-contact {{ if $contact.hasBorderColumn }}border-column{{ end }}">
+      <div class="col-12 col-lg-3 py-24 py-lg-0 footer-contact {{ if $contact.hasbordercolumn }}border-column{{ end }}">
         <div class="row">
           <div class="col col-lg-12">
             <h3 class="footer-heading">{{ default "Contact us" $contact.title }}</h3>
@@ -34,14 +34,14 @@
           </div>
 
           <div class="col col-lg-12 contact-btn order-lg-last d-flex d-lg-block mt-lg-32">
-            <a href="{{ default "https://www.qld.gov.au/contact-us" $contact.buttonLink }}" class="btn btn-outline-secondary">
-              {{ default "Contact us" $contact.buttonLabel }}
+            <a href="{{ default "https://www.qld.gov.au/contact-us" $contact.buttonlink }}" class="btn btn-outline-secondary">
+              {{ default "Contact us" $contact.buttonlabel }}
             </a>
           </div>
 
           <div class="col-12">
             {{- /* Custom contact list: if showList is not explicitly false and list exists, render it */ -}}
-            {{- if and (or (not (isset $contact "showList")) (ne $contact.showList false)) (isset $contact "list") (gt (len $contact.list) 0) -}}
+            {{- if and (ne $contact.showlist false) (gt (len $contact.list) 0) -}}
               {{- range $k, $it := $contact.list }}
                 <div class="footer-contact-item footer-contact-{{ $k }}">
                   <span class="qld-icon {{ $it.icon }}" aria-hidden="true"></span> {{ $it.label | safeHTML }}
@@ -65,16 +65,16 @@
       </div>
 
       {{- /* Optional Column 1 */ -}}
-      {{- if or (isset $opt1 "content") (isset $opt1 "showFollowLinks") (isset $opt1 "showCustomLinks") }}
-      <div class="col-12 col-lg-2 optional-column-1 {{ if $opt1.hasBorderColumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt1.title }}">
+      {{- if or $opt1.content $opt1.showfollowlinks $opt1.showcustomlinks }}
+      <div class="col-12 col-lg-2 optional-column-1 {{ if $opt1.hasbordercolumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt1.title }}">
         <div class="footer-column pe-16">
           {{ if $opt1.title }}<h3 class="footer-heading">{{ $opt1.title }}</h3>{{ end }}
           <div class="footer-content">
             {{ if $opt1.content }}{{ $opt1.content | safeHTML }}{{ end }}
-            {{ if $opt1.showFollowLinks }}
+            {{ if $opt1.showfollowlinks }}
               {{/* follow links: implement if you have params.followLinks */}}
             {{ end }}
-            {{ if $opt1.showCustomLinks }}
+            {{ if $opt1.showcustomlinks }}
               {{/* custom links: implement if you have opt1.customLinks */}}
             {{ end }}
           </div>
@@ -83,9 +83,9 @@
       {{- end }}
 
       <!-- WoG links -->
-      <div class="col-12 col-lg-2 {{ if $footerLinks.hasBorderColumn }}border-column{{ end }}" aria-label="footer-navigation">
+      <div class="col-12 col-lg-2 {{ if $footerLinks.hasbordercolumn }}border-column{{ end }}" aria-label="footer-navigation">
         <div class="footer-column pe-lg-16">
-          {{ if and (isset $footerLinks "list") (gt (len $footerLinks.list) 0) }}
+          {{ if gt (len $footerLinks.list) 0 }}
             {{ if $footerLinks.title }}<h3 class="footer-heading">{{ $footerLinks.title }}</h3>{{ end }}
             <ul class="nav footer-link-list flex-column pt-lg-2">
               {{- range $footerLinks.list }}
@@ -108,14 +108,14 @@
       </div>
 
       {{- /* Optional Column 2 */ -}}
-      {{- if or (isset $opt2 "content") (isset $opt2 "showFollowLinks") (isset $opt2 "showCustomLinks") }}
-      <div class="col-12 col-lg-2 optional-column-2 {{ if $opt2.hasBorderColumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt2.title }}">
+      {{- if or $opt2.content $opt2.showfollowlinks $opt2.showcustomlinks }}
+      <div class="col-12 col-lg-2 optional-column-2 {{ if $opt2.hasbordercolumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt2.title }}">
         <div class="footer-column pe-lg-16">
           {{ if $opt2.title }}<h3 class="footer-heading">{{ $opt2.title }}</h3>{{ end }}
           <div class="footer-content">
             {{ if $opt2.content }}{{ $opt2.content | safeHTML }}{{ end }}
-            {{ if $opt2.showFollowLinks }}{{/* follow links */}}{{ end }}
-            {{ if $opt2.showCustomLinks }}{{/* custom links */}}{{ end }}
+            {{ if $opt2.showfollowlinks }}{{/* follow links */}}{{ end }}
+            {{ if $opt2.showcustomlinks }}{{/* custom links */}}{{ end }}
           </div>
         </div>
       </div>
@@ -139,28 +139,24 @@
               {{ end }}
             </div>
 
-            {{- /* Footer Logo */ -}}
-            {{ if $footerLogo.src }}
+            {{- /* Footer Logo - only show if src exists and show is not explicitly false */ -}}
+            {{ if and $footerLogo.src (ne $footerLogo.show false) }}
               <div class="footer-logo">
-                <img src="{{ $footerLogo.src }}" alt="{{ $footerLogo.alt }}" class="img-fluid" />
-              </div>
-            {{ else if $footerLogo.show }}
-              <div class="footer-crest">
-                {{/* Logo partial could go here if available */}}
+                <img src="{{ $footerLogo.src }}" alt="{{ default "" $footerLogo.alt }}" class="img-fluid" />
               </div>
             {{ end }}
 
             {{- /* Footer Copyright */ -}}
-            {{ if isset $copyright "content" }}
-              <p class="copyright">{{ $copyright.content | safeHTML }}{{ if $copyright.showYearFrom }} {{ $copyright.yearFrom }} -{{ end }} {{ now.Format "2006" }}</p>
+            {{ if $copyright.content }}
+              <p class="copyright">{{ $copyright.content | safeHTML }}{{ if $copyright.showyearfrom }} {{ $copyright.yearfrom }} -{{ end }} {{ now.Format "2006" }}</p>
             {{ else }}
               <p class="copyright">© The State of Queensland {{ now.Format "2006" }}</p>
             {{ end }}
 
             {{- /* Organisation Link */ -}}
-            {{ if isset $org "show" }}
+            {{ if $org.show }}
               <p>
-                <a class="fw-semibold" href="{{ default "https://www.qld.gov.au" $org.URL }}" rel="external">
+                <a class="fw-semibold" href="{{ default "https://www.qld.gov.au" $org.url }}" rel="external">
                   {{ default "Queensland Government" $org.text }}
                 </a>
               </p>
