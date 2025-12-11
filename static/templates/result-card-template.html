@@ -18,7 +18,7 @@
                         Open
                     </a></li>
                 {{#if location}}
-                <li class="link-item"><a class="link view-button" href="#" data-location="{{location}}" aria-label="View {{title}} on map">
+                <li class="link-item"><a class="link view-button" href="#" onclick="event.preventDefault(); window.map.flyTo({center: [{{location}}], zoom: 14})" data-location="{{location}}" aria-label="View {{title}} on map">
                         <span class="qld-icon qld-icon-md qld-icon-location leading" aria-hidden="true"></span>
                         View on map
                     </a></li>
