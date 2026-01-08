@@ -27,7 +27,7 @@
           <ul class="nav">
           {{#if fields}} {{#each fields}}
             <li class="nav-item">
-              <a class="nav-link" href="#">{{value}}</a>
+              <a class="nav-link" href="{{slug}}">{{{value}}}</a>
             </li>
           {{/each}} {{else}} {{{body}}} {{/if}}
         </div>  
@@ -58,7 +58,7 @@
     <div class="accordion-body">
       <div class="ms-4">
         {{#if fields}} {{#each fields}}
-        <p><strong>{{label}}:</strong> {{value}}</p>
+        <p><strong>{{label}}:</strong> {{{value}}}</p>
         {{/each}} {{else}} {{{body}}} {{/if}}
       </div>
     </div>
