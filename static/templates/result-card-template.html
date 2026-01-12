@@ -1,8 +1,14 @@
 <div class="col">
     <div class="card card-default default icon-left card-multi-action">
-        <div class="card-icon-background mt-4">
-            <span class="qld-icon qld-icon-lg qld-icon-design icon-left" aria-hidden="true"></span>
+        {{#if thumbnail}}
+        <div class="card-image">
+            <img src="/img/{{thumbnail}}" alt="{{ thumbnailAlt }}" />
         </div>
+        {{else}}
+        <div class="card-icon-background">
+            <span class="qld-icon qld-icon-lg qld-icon-building icon-left" aria-hidden="true"></span>
+        </div>
+        {{/if}}
         <div class="card-body result-card">
             <h4 class="card-title">
                 <a href="{{url}}">{{title}}</a>
