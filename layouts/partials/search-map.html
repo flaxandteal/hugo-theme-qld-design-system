@@ -17,23 +17,21 @@
         <a id="filterToggle" href="#" class="dropdown-toggle dark" aria-expanded="false">Filters</a>
     </div>
     <div class="filter-content my-2" id="filterContent">
-        <ul class="tag-list tag-dark p-4 my-2">
-            <li class="tag-item tag-link tag-large selected tag" data-content="record-type-content">
-                <a href='javascript:void(0)'>Record Type</a>
+        <template id="filter-tab-template">
+            <li class="tag-item tag-link tag-large tag">
+                <a href='javascript:void(0)'></a>
             </li>
-            <li class="tag-item tag-link tag-large tag" data-content="category-content">
-                <a href='javascript:void(0)' class="tag active">Category</a>
-            </li>
+        </template>
+
+        <template id="filter-content-template">
+            <div class="content-item">
+                <div></div>
+            </div>
+        </template>
+
+        <ul id="filter-tabs-container" class="tag-list tag-dark p-4 my-2">
         </ul>
         <div id="tag-content">
-            <div id="record-type-content" class="content-item active">
-                <div id="filter-record-type"></div>
-            </div>
-            <div id="category-content" class="content-item">
-                <div id="instructions"></div>
-                <div id="filter-category"></div>
-                <div id="filter"></div>
-            </div>
         </div>
     </div>
 </div>
