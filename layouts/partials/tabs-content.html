@@ -20,12 +20,12 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link " id="related-resources-tab" data-bs-toggle="tab"
-                    data-bs-target="#related-resources-234566-tab-pane" type="button" role="tab"
-                    aria-controls="related-resources-234566-tab-pane" aria-selected="false">
+                <button class="nav-link " id="further-information-tab" data-bs-toggle="tab"
+                    data-bs-target="#further-information-234566-tab-pane" type="button" role="tab"
+                    aria-controls="further-information-234566-tab-pane" aria-selected="false">
                     <span>
-                        <i class="qld-icon qld-icon-md qld-icon-calendar"></i>
-                        Related Resources</span>
+                        <i class="qld-icon qld-icon-md qld-icon-alert-information"></i>
+                        Further Information</span>
                 </button>
             </li>
         </ul>
@@ -50,8 +50,8 @@
                     <div id="asset-overview"></div>
                 </div>
         </section>
-        <section class="tab-pane fade" id="location-234566-tab-pane" role="tabpanel"
-            aria-labelledby="location-tab" tabindex="0">
+        <section class="tab-pane fade" id="location-234566-tab-pane" role="tabpanel" aria-labelledby="location-tab"
+            tabindex="0">
             <div class="full-width-content">
                 <div id="map" class="asset-map"></div>
             </div>
@@ -63,14 +63,17 @@
                     <div id="asset-location"></div>
                 </div>
         </section>
-        <section class="tab-pane fade" id="related-resources-234566-tab-pane" role="tabpanel"
-            aria-labelledby="related-resources-tab" tabindex="0">
+        <section class="tab-pane fade" id="further-information-234566-tab-pane" role="tabpanel"
+            aria-labelledby="further-information-tab" tabindex="0">
+            <div id="sketchfab-viewer" class="full-width-content hidden">
+                    {{ partial "sketchfab-viewer.html" . }}
+            </div>
             <div class="accordion-group mt-5">
                 <div class="accordion-toggle">
                     <button class="accordion-toggle-btn accordion-toggle-btn--open" type="button">Close all</button>
                 </div>
                 <div class="accordion" id="accordion-group-3">
-                    <div id="asset-related"></div>
+                    <div id="asset-further-information"></div>
                 </div>
         </section>
     </div>
