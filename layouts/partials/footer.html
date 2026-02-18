@@ -1,15 +1,16 @@
 {{- $prm := .Site.Params -}}
-{{- $ftr := default (dict) $prm.footer -}}
-{{- $contact := default (dict) $ftr.contact -}}
-{{- $opt1 := default (dict) $ftr.optionalcolumn1 -}}
-{{- $opt2 := default (dict) $ftr.optionalcolumn2 -}}
-{{- $footerLinks := default (dict) $ftr.footerlinks -}}
-{{- $footerLogo := default (dict) $ftr.footerlogo -}}
-{{- $acks := default (slice) $ftr.acknowledgements -}}
-{{- $org := default (dict) $ftr.organisationlink -}}
-{{- $copyright := default (dict) $ftr.copyright -}}
+{{- $ftr := cond (isset $prm "footer") $prm.footer (dict) -}}
+{{- $contact := cond (isset $ftr "contact") $ftr.contact (dict) -}}
+{{- $opt1 := cond (isset $ftr "optionalcolumn1") $ftr.optionalcolumn1 (dict) -}}
+{{- $footerLinks := cond (isset $ftr "footerlinks") $ftr.footerlinks (dict) -}}
+{{- $footerLogo := cond (isset $ftr "footerlogo") $ftr.footerlogo (dict) -}}
+{{- $acks := cond (isset $ftr "acknowledgements") $ftr.acknowledgements (slice) -}}
+{{- $org := cond (isset $ftr "organisationlink") $ftr.organisationlink (dict) -}}
+{{- $copyright := cond (isset $ftr "copyright") $ftr.copyright (dict) -}}
+{{- $additionalInformation := cond (isset $ftr "additionalinformation") $ftr.additionalinformation (dict) -}}
+{{- $feedback := $prm.feedback | default (dict) -}}
 
-<footer class="qld-footer {{ $prm.variantclass }}" role="contentinfo">
+<footer class="qld-footer {{ $prm.variantClass }}" role="contentinfo">
   <div class="container">
     {{ if $prm.sitename }}
     <div class="row">
@@ -22,7 +23,7 @@
     <div class="row">
 
       <!-- Contact us Column -->
-      <div class="col-12 col-lg-3 py-24 py-lg-0 footer-contact {{ if $contact.hasbordercolumn }}border-column{{ end }}">
+      <div class="col-12 col-lg-3 py-24 py-lg-0 footer-contact {{ if $contact.hasBorderColumn }}border-column{{ end }}">
         <div class="row">
           <div class="col col-lg-12">
             <h3 class="footer-heading">{{ default "Contact us" $contact.title }}</h3>
@@ -34,88 +35,49 @@
           </div>
 
           <div class="col col-lg-12 contact-btn order-lg-last d-flex d-lg-block mt-lg-32">
-            <a href="{{ default "https://www.qld.gov.au/contact-us" $contact.buttonlink }}" class="btn btn-outline-secondary">
-              {{ default "Contact us" $contact.buttonlabel }}
+            <a href="{{ default "https://www.qld.gov.au/contact-us" $contact.buttonLink }}" class="btn btn-outline-secondary">
+              {{ default "Contact us" $contact.buttonLabel }}
             </a>
           </div>
 
           <div class="col-12">
-            {{- /* Custom contact list: if showList is not explicitly false and list exists, render it */ -}}
-            {{- if and (ne $contact.showlist false) (gt (len $contact.list) 0) -}}
-              {{- range $k, $it := $contact.list }}
-                <div class="footer-contact-item footer-contact-{{ $k }}">
-                  <span class="qld-icon {{ $it.icon }}" aria-hidden="true"></span> {{ $it.label | safeHTML }}
-                </div>
-              {{- end }}
-            {{- else }}
-              <div class="footer-contact-item footer-contact-phone">
-                <span class="qld-icon qld-icon-phone" aria-hidden="true"></span>
-                <b>Phone:</b>
-                <a href="tel:137468" rel="noopener">13 QGOV (13 74 68)</a>
-              </div>
-
-              <div class="footer-contact-item footer-contact-email">
-                <span class="qld-icon qld-icon-email" aria-hidden="true"></span>
-                <b>Email:</b>
-                <a href="mailto:email@qld.gov.au" rel="noopener"><span class="user-select-all">email@qld.gov.au</span></a>
-              </div>
-            {{- end }}
+            {{ partial "followLinks.html" . }}
           </div>
         </div>
       </div>
-
-      {{- /* Optional Column 1 */ -}}
-      {{- if or $opt1.content $opt1.showfollowlinks $opt1.showcustomlinks }}
-      <div class="col-12 col-lg-2 optional-column-1 {{ if $opt1.hasbordercolumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt1.title }}">
-        <div class="footer-column pe-16">
-          {{ if $opt1.title }}<h3 class="footer-heading">{{ $opt1.title }}</h3>{{ end }}
-          <div class="footer-content">
-            {{ if $opt1.content }}{{ $opt1.content | safeHTML }}{{ end }}
-            {{ if $opt1.showfollowlinks }}
-              {{/* follow links: implement if you have params.followLinks */}}
-            {{ end }}
-            {{ if $opt1.showcustomlinks }}
-              {{/* custom links: implement if you have opt1.customLinks */}}
-            {{ end }}
-          </div>
-        </div>
-      </div>
-      {{- end }}
 
       <!-- WoG links -->
-      <div class="col-12 col-lg-2 {{ if $footerLinks.hasbordercolumn }}border-column{{ end }}" aria-label="footer-navigation">
+      <div class="col-12 col-lg-2 {{ if $footerLinks.hasBorderColumn }}border-column{{ end }}" aria-label="footer-navigation">
         <div class="footer-column pe-lg-16">
-          {{ if gt (len $footerLinks.list) 0 }}
+          {{ if and (isset $footerLinks "list") (gt (len $footerLinks.list) 0) }}
             {{ if $footerLinks.title }}<h3 class="footer-heading">{{ $footerLinks.title }}</h3>{{ end }}
             <ul class="nav footer-link-list flex-column pt-lg-2">
               {{- range $footerLinks.list }}
                 <li><a class="nav-link" href="{{ .link }}" {{ if .target }} target="{{ .target }}"{{ end }}>{{ .label }}</a></li>
               {{- end }}
             </ul>
-          {{ else }}
-            <ul class="nav footer-link-list flex-column">
-              <li><a class="nav-link" href="https://www.qld.gov.au/help">Help</a></li>
-              <li><a class="nav-link" href="https://www.qld.gov.au/legal/copyright">Copyright</a></li>
-              <li><a class="nav-link" href="https://www.qld.gov.au/legal/disclaimer">Disclaimer</a></li>
-              <li><a class="nav-link" href="https://www.qld.gov.au/legal/privacy">Privacy</a></li>
-              <li><a class="nav-link" href="https://www.qld.gov.au/about/rights-accountability/right-to-information">Right to information</a></li>
-              <li><a class="nav-link" href="https://www.qld.gov.au/help/accessibility">Accessibility</a></li>
-              <li><a class="nav-link" href="https://smartjobs.qld.gov.au" target="_blank">Jobs in Queensland Government</a></li>
-              <li><a class="nav-link" href="https://www.qld.gov.au/help/languages">Other languages</a></li>
-            </ul>
           {{ end }}
         </div>
       </div>
 
-      {{- /* Optional Column 2 */ -}}
-      {{- if or $opt2.content $opt2.showfollowlinks $opt2.showcustomlinks }}
-      <div class="col-12 col-lg-2 optional-column-2 {{ if $opt2.hasbordercolumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt2.title }}">
+      {{- /* Optional Column 1 */ -}}
+      {{- $opt1Links := default (slice) $opt1.customlinks -}}
+      {{- if or $opt1.content $opt1.showfollowlinks (gt (len $opt1Links) 0) }}
+      <div class="col-12 col-lg-2 optional-column-2 {{ if $opt1.hasbordercolumn }}border-column{{ end }}" aria-label="{{ default "Footer links" $opt1.title }}">
         <div class="footer-column pe-lg-16">
-          {{ if $opt2.title }}<h3 class="footer-heading">{{ $opt2.title }}</h3>{{ end }}
+          {{ if $opt1.title }}<h3 class="footer-heading">{{ $opt1.title }}</h3>{{ end }}
           <div class="footer-content">
-            {{ if $opt2.content }}{{ $opt2.content | safeHTML }}{{ end }}
-            {{ if $opt2.showfollowlinks }}{{/* follow links */}}{{ end }}
-            {{ if $opt2.showcustomlinks }}{{/* custom links */}}{{ end }}
+            {{ if $opt1.content }}{{ $opt1.content | safeHTML }}{{ end }}
+            {{ if $opt1.showfollowlinks }}
+              {{ partial "followLinks.html" . }}
+            {{ end }}
+            {{ if gt (len $opt1Links) 0 }}
+              <ul class="nav footer-link-list flex-column">
+                {{- range $opt1Links }}
+                  <li><a class="nav-link" href="{{ .link }}"{{ if .target }} target="{{ .target }}"{{ end }}>{{ .label }}</a></li>
+                {{- end }}
+              </ul>
+            {{ end }}
           </div>
         </div>
       </div>
@@ -132,17 +94,18 @@
                   {{ if .content }}{{ .content | safeHTML }}{{ end }}
                 {{ end }}
               {{ else }}
-                <p>We pay our respects to the Aboriginal and Torres Strait Islander ancestors of this land, their
-                spirits and their legacy. The foundations laid by these ancestors—our First Nations peoples—give
-                strength, inspiration and courage to current and future generations towards creating a better
-                Queensland.</p>
+<p>We acknowledge all Aboriginal and Torres Strait Islander Traditional Custodians of Country and recognise their continuing connection to land, waters, and seas. We pay our respects to Elders past and present. Aboriginal people and Torres Strait Islander people are advised that the the Queensland Heritage Register contains images and names of people who have passed away. Register entries may contain language and descriptions that reflect the attitudes, values, and perspectives of the time in which the original sources were created. These may now be considered outdated, inappropriate, or offensive.</p>
               {{ end }}
             </div>
 
-            {{- /* Footer Logo - only show if src exists and show is not explicitly false */ -}}
-            {{ if and $footerLogo.src (ne $footerLogo.show false) }}
+            {{- /* Footer Logo */ -}}
+            {{ if $footerLogo.src }}
               <div class="footer-logo">
-                <img src="{{ $footerLogo.src }}" alt="{{ default "" $footerLogo.alt }}" class="img-fluid" />
+                <img src="{{ $footerLogo.src }}" alt="{{ $footerLogo.alt }}" class="img-fluid" />
+              </div>
+            {{ else if $footerLogo.show }}
+              <div class="footer-crest">
+                {{/* Logo partial could go here if available */}}
               </div>
             {{ end }}
 
@@ -151,6 +114,11 @@
               <p class="copyright">{{ $copyright.content | safeHTML }}{{ if $copyright.showyearfrom }} {{ $copyright.yearfrom }} -{{ end }} {{ now.Format "2006" }}</p>
             {{ else }}
               <p class="copyright">© The State of Queensland {{ now.Format "2006" }}</p>
+            {{ end }}
+              <p class="copyright">This site is driven by <a href="https://github.com/archesproject/arches-her/tree/dev/2.0.x">Arches for HERs 2.0</a> models.</p>
+
+            {{ range $additionalInformation }}
+              <p>{{ .text }}</p>
             {{ end }}
 
             {{- /* Organisation Link */ -}}
@@ -168,4 +136,6 @@
 
     </div>
   </div>
+{{/* partial "hugo-cookies/consent.html" . */}}
 </footer>
+{{ partial "starches/map-dialog.html" . }}
