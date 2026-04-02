@@ -1,0 +1,80 @@
+<section class="qld-tabs container-tabs default">
+    <div class="tabs-area container">
+        <ul class="nav nav-tabs " role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab"
+                    data-bs-target="#overview-234566-tab-pane" type="button" role="tab"
+                    aria-controls="overview-234566-tab-pane" aria-selected="true">
+                    <span>
+                        <i class="qld-icon qld-icon-md qld-icon-image"></i>
+                        Overview</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="location-tab" data-bs-toggle="tab"
+                    data-bs-target="#location-234566-tab-pane" type="button" role="tab"
+                    aria-controls="location-234566-tab-pane" aria-selected="false">
+                    <span>
+                        <i class="qld-icon qld-icon-md qld-icon-location"></i>
+                        Location</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="further-information-tab" data-bs-toggle="tab"
+                    data-bs-target="#further-information-234566-tab-pane" type="button" role="tab"
+                    aria-controls="further-information-234566-tab-pane" aria-selected="false">
+                    <span>
+                        <i class="qld-icon qld-icon-md qld-icon-alert-information"></i>
+                        Further Information</span>
+                </button>
+            </li>
+        </ul>
+        <button class="scroll scroll-left" aria-hidden="true" aria-label="Scroll tab buttons left" tabindex="-1">
+            <i></i>
+        </button>
+        <button class="scroll scroll-right" aria-hidden="true" aria-label="Scroll tab buttons right" tabindex="-1">
+            <i></i>
+        </button>
+    </div>
+    <div class="tab-content pt-0 px-sm-0 border-0 container">
+        <section class="tab-pane fade show active" id="overview-234566-tab-pane" role="tabpanel"
+            aria-labelledby="overview-tab" tabindex="0">
+            <div class="full-width-content">
+                {{ partial "asset-overview.html" . }}
+            </div>
+            <div class="accordion-group mt-5">
+                <div class="accordion-toggle">
+                    <button class="accordion-toggle-btn accordion-toggle-btn--open" type="button">Close all</button>
+                </div>
+                <div class="accordion" id="accordion-group-1">
+                    <div id="asset-overview"></div>
+                </div>
+        </section>
+        <section class="tab-pane fade" id="location-234566-tab-pane" role="tabpanel" aria-labelledby="location-tab"
+            tabindex="0">
+            <div class="full-width-content">
+                <div id="map" class="asset-map"></div>
+            </div>
+            <div class="accordion-group mt-5">
+                <div class="accordion-toggle">
+                    <button class="accordion-toggle-btn accordion-toggle-btn--open" type="button">Close all</button>
+                </div>
+                <div class="accordion" id="accordion-group-2">
+                    <div id="asset-location"></div>
+                </div>
+        </section>
+        <section class="tab-pane fade" id="further-information-234566-tab-pane" role="tabpanel"
+            aria-labelledby="further-information-tab" tabindex="0">
+            <div id="sketchfab-viewer" class="full-width-content hidden">
+                    {{ partial "sketchfab-viewer.html" . }}
+            </div>
+            <div class="accordion-group mt-5">
+                <div class="accordion-toggle">
+                    <button class="accordion-toggle-btn accordion-toggle-btn--open" type="button">Close all</button>
+                </div>
+                <div class="accordion" id="accordion-group-3">
+                    <div id="asset-further-information"></div>
+                </div>
+        </section>
+    </div>
+</section>

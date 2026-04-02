@@ -1,0 +1,28 @@
+<div class="row">
+<div class="qld-banner qld-banner-grid banner-default {{ .Params.theme | default "dark" }} banner-radius">
+  <div class="container-fluid">
+    <div class="banner-inner">
+      <div class="banner-breadcrumbs">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page" data-href="#">Search</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="banner-content">
+        <h1 class="banner-title-wrap ">
+          <span class="banner-title">{{ .Params.title }}</span>
+        </h1>
+        {{ if .Params.text }}
+        <div class="banner-abstract">
+          {{ .Params.text | markdownify }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
