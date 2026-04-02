@@ -3,7 +3,7 @@
 {{ $baseAssets := (slice "asset.ts") }}
 {{ range $baseAssets }}
 {{- $js := resources.Get . -}}
-{{ $params := (dict "search_config" site.Params.search_config "is_production" hugo.IsProduction "blob_base_url" (getenv "BLOB_BASE_URL") "node_config" site.Params.nodeConfig) }}
+{{ $params := (dict "search_config" site.Params.search_config "is_production" hugo.IsProduction "blob_base_url" (getenv "BLOB_BASE_URL") "node_config" site.Params.nodeConfig "default_show_full_asset" site.Params.default_show_full_asset) }}
 {{ $sourceMap := cond hugo.IsProduction "" "inline" }}
 {{ $opts := dict "sourceMap" $sourceMap "minify" hugo.IsProduction "target" "es2022" "externals" (slice "pdfmake/build/pdfmake" "pdfmake/build/vfs_fonts") "params" $params }}
 {{ $js = $js | js.Build $opts }}
@@ -28,6 +28,7 @@
         </a>
 
         <div class="col-auto">
+            <a id="swap-link-public" href="#" class="btn btn-secondary" hidden>View full resource</a>
             <a id="asset-download" class="btn btn-primary " href="#" target="_blank" data-cy="download-button">
                 <span class="qld-icon qld-icon-md qld-icon-download leading" aria-hidden="true"></span>
                 <span class="btn-label-default">Download</span>
@@ -36,7 +37,20 @@
             </a>
         </div>
     </div>
-    <div class="row">
+
+    <div id="demo-warning" class="callout mt-4" hidden>
+        <div class="callout-text d-flex align-items-center justify-content-between">
+            <span>You are viewing the full resource — this may include sensitive data.</span>
+            <a id="swap-link" href="#" class="btn btn-secondary btn-sm"></a>
+        </div>
+    </div>
+
+    <div id="private-view" class="row py-4" hidden>
+        <h2>Full Resource</h2>
+        <section id="asset" class="mb-4"></section>
+    </div>
+
+    <div id="public-view" class="row">
         {{ partial "tabs-content.html" . }}
     </div>
 </div>
