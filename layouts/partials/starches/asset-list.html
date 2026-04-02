@@ -1,0 +1,42 @@
+{{- if not (.Page.Store.Get "asset-list-style-loaded-flag") -}}
+
+{{ $baseAssets := (slice "asset-list.ts") }}
+{{ range $baseAssets }}
+{{- $js := resources.Get . -}}
+{{ $params := (dict "search_config" site.Params.search_config "is_production" hugo.IsProduction "blob_base_url" (getenv "BLOB_BASE_URL") "node_config" site.Params.nodeConfig) }}
+{{ $sourceMap := cond hugo.IsProduction "" "inline" }}
+{{ $opts := dict "sourceMap" $sourceMap "minify" hugo.IsProduction "target" "es2022" "externals" (slice "pdfmake/build/pdfmake" "pdfmake/build/vfs_fonts") "params" $params }}
+{{ $js = $js | js.Build $opts }}
+<script src="{{ $js.RelPermalink }}"
+    type="module">
+    </script>
+{{ end }}
+{{- .Page.Store.Set "asset-list-style-loaded-flag" true -}}
+{{- end -}}
+
+<div class="container radius">
+    {{ partial "banner.html" . }}
+
+    <div class="row mt-5 justify-content-between align-items-center px-sm-16">
+        <a class="col-auto back-link" href="/map" data-cy="back-link">
+            <div class="d-flex align-items-center">
+                <span class="qld-icon qld-icon-xxl qld-icon-arrow-left"></span>
+                <span class="ms-4 d-none d-sm-inline">Return to Search</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <h1 id="asset-title"></h1>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12" id="resource-models"></div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12" id="asset-overview"></div>
+    </div>
+</div>
