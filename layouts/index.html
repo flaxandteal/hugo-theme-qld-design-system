@@ -12,6 +12,11 @@
     </div>
   </div>
 </section>
+{{- if .Params.hasTransitionBox -}}
+<section class="pt-64" data-cy="text-section">
+  {{ partial "transition.html" .Params.transitionBox }}
+</section>
+{{ end }}
 {{ partial "card-grid.html" (dict "cards" (.Params.getStarted) "title" "Get Started") }}
 <section class="pb-64">
   {{ partial "promo-panel-video.html" . }}

@@ -14,7 +14,7 @@
 {{- .Page.Store.Set "asset-style-loaded-flag" true -}}
 {{- end -}}
 
-<div class="container radius">
+<div class="container radius default-page">
     {{ partial "banner.html" . }}
 
     <div class="row">
@@ -24,7 +24,7 @@
         {{ partial "video-player.html" $promo.video }}
       </section>
       {{- end -}}
-      <section class="container">
+      <section class="container container-for-page-body">
       {{ .Content }}
       {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
       </section>

@@ -2,6 +2,12 @@
 <html lang="{{ .Site.Language.Lang | default "en" }}">
   {{- partial "head.html" . -}}
 <body class="d-flex flex-column min-vh-100">
+  {{ if $.Site.Params.Ga4token }}
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $.Site.Params.Ga4token }}"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  {{ end }}
 
   {{- partial "header.html" . -}}
   <div class="container radius">
