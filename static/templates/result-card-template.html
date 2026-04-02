@@ -41,8 +41,9 @@
     <div class="card card-default default card-multi-action w-100">
         <div class="card-img ratio ratio-16x9">
             {{#if thumbnailURL}}
-            <div class="card-img-top"
-                style="--card-image:url({{thumbnailURL}})" alt="{{ thumbnailAlt }}"></div>
+            <div class="card-img-top card-img-background-by-img">
+                <img src="{{thumbnailURL}}" alt="{{ thumbnailAlt }}"/>
+            </div>
             {{/if}}
         </div>
         <div class="card-body result-card">
