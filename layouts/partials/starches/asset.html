@@ -54,6 +54,17 @@
 
     <div id="private-view" class="row py-4" hidden>
         <h2>Full Resource</h2>
+        <div id="related-resources-banner" class="related-resources-banner" hidden>
+          <button class="related-resources-banner__toggle" aria-expanded="false" aria-controls="related-resources-banner__content">
+            <span class="related-resources-banner__label">{{ i18n "starches_related_resources" }}</span>
+            <span class="related-resources-banner__count"></span>
+            <span class="related-resources-banner__chevron" aria-hidden="true"></span>
+          </button>
+          <div id="related-resources-banner__content" class="related-resources-banner__content" hidden>
+          </div>
+        </div>
+        <div id="resource-relations" hidden>
+        </div>
         <section id="asset" class="mb-4"></section>
     </div>
 
