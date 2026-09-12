@@ -5,7 +5,7 @@
 {{- $js := resources.Get . -}}
 {{ $params := (dict "search_config" site.Params.search_config "is_production" hugo.IsProduction "blob_base_url" (getenv "BLOB_BASE_URL") "node_config" site.Params.nodeConfig "default_show_full_asset" site.Params.default_show_full_asset "ros_madair" site.Params.ros_madair) }}
 {{ $sourceMap := cond hugo.IsProduction "" "inline" }}
-{{ $opts := dict "sourceMap" $sourceMap "minify" hugo.IsProduction "target" "es2022" "externals" (slice "pdfmake/build/pdfmake" "pdfmake/build/vfs_fonts") "params" $params }}
+{{ $opts := dict "sourceMap" $sourceMap "minify" hugo.IsProduction "target" "es2022" "externals" (slice "pdfmake/build/pdfmake" "pdfmake/build/vfs_fonts" "@alizarin/napi" "@alizarin/clm-napi" "@alizarin/filelist-napi") "params" $params }}
 {{ $js = $js | js.Build $opts }}
 <script src="{{ $js.RelPermalink }}"
     type="module">

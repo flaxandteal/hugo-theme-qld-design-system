@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{- $params := .Params -}}
-{{- $opts := dict "params" $params "minify" hugo.IsProduction -}}
+{{- $opts := dict "params" $params "minify" hugo.IsProduction "externals" (slice "@alizarin/napi" "@alizarin/clm-napi" "@alizarin/filelist-napi") -}}
 {{- $indexJS := resources.Get "index.ts" | js.Build $opts -}}
 
 <section class="container radius">
